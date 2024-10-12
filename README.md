@@ -37,3 +37,46 @@ Docker
 Postman (for testing the APIs)
 Flask (pip install flask)
 SQL Server ODBC Driver (pyodbc for Python)
+
+project structure
+/User-Login-Microservices
+|-- /frontend                 # Frontend Microservice
+|   |-- app.py                # Main Flask application for the frontend
+|   |-- templates/            # HTML templates for rendering
+|   |-- static/               # Static files (CSS, JavaScript)
+|   |-- requirements.txt       # Python dependencies for frontend
+|
+|-- /backend                  # Backend Microservice
+|   |-- app.py                # Main Flask API application for backend
+|   |-- requirements.txt       # Python dependencies for backend
+|
+|-- Dockerfile                 # Dockerfile for building the images
+|-- docker-compose.yml         # Docker Compose configuration
+|-- README.md                  # Project documentation
+
+
+Testing with Postman
+
+{
+    "username": "your_username",
+    "password": "your_password"
+}
+
+Build the Docker Images
+
+docker build -t frontend:latest ./frontend
+docker build -t backend:latest ./backend
+
+
+Pushing to a Docker Registry
+
+docker tag frontend:latest yourusername/frontend:latest
+docker tag backend:latest yourusername/backend:latest
+
+docker push yourusername/frontend:latest
+docker push yourusername/backend:latest
+
+Deploying with Kubernetes
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f backend-deployment.yaml
+
