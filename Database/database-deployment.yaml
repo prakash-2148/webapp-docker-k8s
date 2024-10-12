@@ -13,16 +13,28 @@ spec:
         app: database
     spec:
       containers:
-      - name: database
-        image: gcr.io/docker2gcp/microservicesapplication-database
-        ports:
-        - containerPort: 1433
-        env:
-          - name: DB_USER
-            value: "sqlserver"
-          - name: DB_PASSWORD
-            value: "Prakash2148@"
-          - name: DB_HOST
-            value: "104.196.127.218"
-          - name: DB_NAME
-            value: "mydatabase"
+        - name: database
+          image: gcr.io/atlantean-theme-437416-a8/backend:latest  # Your correct image
+          ports:
+            - containerPort: 1433  # Port for SQL Server
+          env:
+            - name: DB_USER
+              value: "sqlserver"  # Your SQL Server username
+            - name: DB_PASSWORD
+              value: "Prakash2148@"  # Your SQL Server password
+            - name: DB_HOST
+              value: "34.75.171.77"  # Your SQL Server IP address
+            - name: DB_NAME
+              value: "mydatabase"  # Your database name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-service
+spec:
+  type: LoadBalancer  # This makes the service accessible from outside the cluster
+  ports:
+    - port: 1433  # Port that will be exposed
+      targetPort: 1433  # Port on the pod that the service will route to
+  selector:
+    app: database  # Ensure this matches the label in the deployment

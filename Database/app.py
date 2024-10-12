@@ -5,14 +5,13 @@ import os
 app = Flask(__name__)
 
 # SQL Server connection details (replace with your actual values or use environment variables)
-server = os.getenv('DB_SERVER', '104.196.127.218,1433')  # IP of Cloud SQL instance with port
+server = os.getenv('DB_SERVER', '34.75.171.77,1433')  # IP of Cloud SQL instance with port
 database = os.getenv('DB_NAME', 'mydatabase')  # Database name
 username = os.getenv('DB_USER', 'sqlserver')  # SQL Server username
 password = os.getenv('DB_PASSWORD', 'Prakash2148@')  # SQL Server password
 
 # Connection string
 conn_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
-
 
 def check_database_connection():
     """Checks the database connection."""
@@ -24,7 +23,6 @@ def check_database_connection():
         print(f"Database connection error: {e}")
         return False
 
-
 @app.route('/')
 def home():
     """Home route that shows database connection status."""
@@ -33,7 +31,6 @@ def home():
     else:
         message = "Database connection failed. Please check the configuration."
     return jsonify(message=message)  # Return the message as JSON
-
 
 @app.route('/validate', methods=['POST'])
 def validate_login():
@@ -61,7 +58,6 @@ def validate_login():
         print(f"Database error: {e}")
         return jsonify(error=str(e)), 500
 
-
 @app.route('/connection')
 def connection_status():
     """Checks and renders connection status."""
@@ -71,7 +67,6 @@ def connection_status():
         message = "Connection failed"
 
     return render_template('status.html', message=message)
-
 
 if __name__ == '__main__':
     if check_database_connection():

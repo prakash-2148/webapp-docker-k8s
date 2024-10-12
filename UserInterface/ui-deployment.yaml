@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment  # Change this to your desired deployment name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend  # Change this to match your desired label
+  template:
+    metadata:
+      labels:
+        app: frontend  # Change this to match your desired label
+    spec:
+      containers:
+      - name: frontend  # Change this to your desired container name
+        image: gcr.io/atlantean-theme-437416-a8/frontend:latest  # Your specified image
+        ports:
+        - containerPort: 5000  # Port for your UI application
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service  # Change this to your desired service name
+spec:
+  type: LoadBalancer  # This makes the service accessible from outside the cluster
+  ports:
+    - port: 80  # Expose port 80 for HTTP access
+      targetPort: 5000  # Forward to container port 5000
+  selector:
+    app: frontend  # Change this to match your desired label

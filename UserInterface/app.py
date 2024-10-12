@@ -4,10 +4,10 @@ import pyodbc
 import os
 
 app = Flask(__name__)
-app.secret_key = 'account-file.json'  # Change this to a random secret key
+app.secret_key = 'your_secret_key'  # Change this to a random secret key
 
 # SQL Server connection details
-server = os.getenv('DB_SERVER', '104.196.127.218,1433')  # IP of Cloud SQL instance with port
+server = os.getenv('DB_SERVER', '34.75.171.77,1433')  # IP of Cloud SQL instance with port
 database = os.getenv('DB_NAME', 'mydatabase')  # Database name
 username = os.getenv('DB_USER', 'sqlserver')  # SQL Server username
 password = os.getenv('DB_PASSWORD', 'Prakash2148@')  # SQL Server password
@@ -23,7 +23,7 @@ def get_all_logins():
         # Connect to SQL Server
         conn = pyodbc.connect(conn_str)
         cursor = conn.cursor()
-        print("Cursor:", conn.cursor())
+        print("Cursor:", cursor)
         # Query to fetch all login entries
         cursor.execute("SELECT * FROM Login")
         results = cursor.fetchall()
@@ -50,8 +50,9 @@ def login():
     password = request.form['password']
 
     try:
-        response = requests.post('http://35.196.64.207/validate', json={'username': username, 'password': password})
-        print(f"Response from database service: {response.json()}")  # Print response from the database container
+        # Change this URL if your backend is running somewhere else
+        response = requests.post('http://localhost:5001/validate', json={'username': username, 'password': password})
+        print(f"Response from database service: {response.json()}")  # Print response from the backend
 
         if response.status_code == 200 and response.json().get('valid'):
             flash('Login successful!', 'success')

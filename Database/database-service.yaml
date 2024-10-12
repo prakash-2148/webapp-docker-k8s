@@ -5,7 +5,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 1433
-      targetPort: 1433
+    - port: 1433  # External port
+      targetPort: 1433  # Internal container port
   selector:
-    app: database
+    app: database  # Should match your deployment's labels
